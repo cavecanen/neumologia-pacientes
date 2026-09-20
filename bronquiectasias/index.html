@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123d3a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Bronquiectasias">
+  <meta name="description" content="Orientación y autocuidado para personas con bronquiectasias: exacerbaciones, esputo, fisioterapia y signos de alarma.">
+  <title>Bronquiectasias Contigo</title>
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="module-home" href="../" aria-label="Volver a todos los módulos">← Módulos</a>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+  <header class="topbar">
+    <div class="brand" aria-label="Bronquiectasias Contigo">
+      <span class="brand-mark" aria-hidden="true">Y</span>
+      <span><strong>Bronquiectasias</strong> Contigo</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="install-button" id="installButton" type="button">Instalar</button>
+      <button class="urgent-button" id="urgentButton" type="button">¿Es urgente?</button>
+    </div>
+  </header>
+  <div id="connectionStatus" class="connection-status" role="status" hidden>Sin conexión · El contenido descargado sigue disponible</div>
+
+  <main id="main" class="app-shell">
+    <section class="welcome" aria-labelledby="pageTitle">
+      <p class="eyebrow">Reconoce los cambios. Actúa a tiempo.</p>
+      <h1 id="pageTitle">¿Qué ha cambiado hoy?</h1>
+      <p>Pregunta sobre flemas, tos, hemoptisis, fisioterapia respiratoria, nebulizaciones o recogida de muestras.</p>
+    </section>
+
+    <nav class="section-tabs" aria-label="Secciones">
+      <button class="tab is-active" data-view="chat" aria-selected="true">Conversación</button>
+      <button class="tab" data-view="check" aria-selected="false">Comprobar cambio</button>
+      <button class="tab" data-view="routine" aria-selected="false">Mi rutina</button>
+    </nav>
+
+    <section id="chatView" class="view is-active" aria-labelledby="chatTitle">
+      <div class="chat-card">
+        <div class="chat-heading">
+          <div class="assistant-avatar" aria-hidden="true">BC</div>
+          <div>
+            <h2 id="chatTitle">Orientador de bronquiectasias</h2>
+            <p><span class="status-dot"></span> Información educativa · No modifica tu tratamiento</p>
+          </div>
+        </div>
+        <div id="chatLog" class="chat-log" role="log" aria-live="polite" aria-relevant="additions">
+          <article class="message assistant">
+            <p>Hola. Puedo ayudarte a reconocer un empeoramiento y a seguir correctamente tu plan habitual.</p>
+            <p><strong>¿Qué te preocupa ahora?</strong></p>
+          </article>
+        </div>
+        <div class="quick-actions" aria-label="Preguntas frecuentes">
+          <button type="button" data-prompt="Tengo más flemas">Más flemas</button>
+          <button type="button" data-prompt="He tosido sangre">Sangre al toser</button>
+          <button type="button" data-prompt="Cómo recojo una muestra de esputo">Muestra de esputo</button>
+          <button type="button" data-prompt="Cómo hago la fisioterapia respiratoria">Fisioterapia</button>
+        </div>
+        <form id="chatForm" class="chat-form">
+          <label class="sr-only" for="chatInput">Escribe tu pregunta</label>
+          <textarea id="chatInput" rows="1" maxlength="500" placeholder="Escribe aquí…" required></textarea>
+          <button type="submit">Enviar</button>
+        </form>
+        <p class="privacy-note">No escribas datos personales. Esta versión no guarda ni envía lo que escribes.</p>
+      </div>
+    </section>
+
+    <section id="checkView" class="view" aria-labelledby="checkTitle" hidden>
+      <div class="panel checker-panel">
+        <div class="panel-heading">
+          <span class="step-badge">Orientación rápida</span>
+          <h2 id="checkTitle">Compara con tu situación habitual</h2>
+          <p>Marca únicamente los cambios nuevos o claramente peores.</p>
+        </div>
+        <form id="symptomForm">
+          <fieldset>
+            <legend>¿Qué ha cambiado?</legend>
+            <label class="check-row"><input type="checkbox" name="symptom" value="cough"><span><strong>Más tos</strong><small>Mayor frecuencia o intensidad</small></span></label>
+            <label class="check-row"><input type="checkbox" name="symptom" value="volume"><span><strong>Más cantidad de esputo</strong><small>Produzco más flemas de lo habitual</small></span></label>
+            <label class="check-row"><input type="checkbox" name="symptom" value="purulence"><span><strong>Esputo más espeso u oscuro</strong><small>Cambio claro de aspecto o consistencia</small></span></label>
+            <label class="check-row"><input type="checkbox" name="symptom" value="breathlessness"><span><strong>Más falta de aire</strong><small>O menor tolerancia al esfuerzo</small></span></label>
+            <label class="check-row"><input type="checkbox" name="symptom" value="systemic"><span><strong>Fiebre, cansancio o malestar</strong><small>Peor estado general</small></span></label>
+            <label class="check-row alert-row"><input type="checkbox" name="blood" value="blood"><span><strong>Sangre al toser</strong><small>Aunque sea poca cantidad</small></span></label>
+            <label class="check-row danger-row"><input type="checkbox" name="danger" value="danger"><span><strong>Ahogo intenso, desmayo o dolor torácico fuerte</strong><small>Necesito ayuda urgente</small></span></label>
+          </fieldset>
+          <label class="duration-label" for="duration">¿Cuánto tiempo llevas así?</label>
+          <select id="duration" name="duration" required>
+            <option value="">Selecciona una opción</option>
+            <option value="short">Menos de 24 horas</option>
+            <option value="medium">Entre 24 y 48 horas</option>
+            <option value="long">Más de 48 horas</option>
+          </select>
+          <button class="primary-button" type="submit">Ver orientación</button>
+        </form>
+        <div id="symptomResult" class="result-card" hidden aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="routineView" class="view" aria-labelledby="routineTitle" hidden>
+      <div class="routine-intro">
+        <p class="eyebrow">Cuidados habituales</p>
+        <h2 id="routineTitle">Una rutina sencilla y constante</h2>
+        <p>Sigue siempre la técnica y el orden indicados por tu equipo.</p>
+      </div>
+      <div class="routine-grid">
+        <article class="routine-card green"><span>01</span><h3>Moviliza las secreciones</h3><p>Realiza diariamente la técnica enseñada por fisioterapia, también cuando te encuentres bien.</p><button data-routine-prompt="Cómo hago la fisioterapia respiratoria">Repasar precauciones →</button></article>
+        <article class="routine-card blue"><span>02</span><h3>Observa tu patrón habitual</h3><p>Conoce la cantidad, color y consistencia normales de tu esputo para detectar cambios.</p><button data-routine-prompt="Tengo más flemas">Valorar un cambio →</button></article>
+        <article class="routine-card amber"><span>03</span><h3>Cuida los dispositivos</h3><p>Limpia y seca nebulizadores y accesorios siguiendo las instrucciones del fabricante.</p><button data-routine-prompt="Cómo limpio mi nebulizador">Ver recomendaciones →</button></article>
+        <article class="routine-card dark"><span>04</span><h3>Activa tu plan</h3><p>Si empeoras, recoge una muestra antes del antibiótico cuando sea posible y sigue tu plan escrito.</p><button data-routine-prompt="Cómo recojo una muestra de esputo">Preparar una muestra →</button></article>
+      </div>
+      <div class="baseline-card">
+        <div><p class="eyebrow">Tu referencia</p><h2>¿Cómo son tus flemas cuando estás estable?</h2></div>
+        <p>Anótalo en tu plan personal: cantidad aproximada, color, consistencia y frecuencia. Detectar un cambio será mucho más fácil.</p>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="urgentDialog" class="modal">
+    <form method="dialog">
+      <button class="close-button" aria-label="Cerrar">×</button>
+      <p class="danger-label">Atención inmediata</p>
+      <h2>Llama al 112 si aparece:</h2>
+      <ul>
+        <li>Sangrado abundante, repetido o que dificulta respirar</li>
+        <li>Falta de aire intensa o que empeora rápidamente</li>
+        <li>Desmayo, confusión, labios azulados o debilidad extrema</li>
+        <li>Dolor torácico fuerte o persistente</li>
+      </ul>
+      <div class="emergency-callout"><strong>Si tienes alguno, llama al 112 ahora.</strong><span>Si estás muy mal, no conduzcas tú mismo.</span></div>
+      <button class="secondary-button" value="close">No tengo esos síntomas</button>
+    </form>
+  </dialog>
+
+  <dialog id="installDialog" class="modal install-dialog">
+    <form method="dialog">
+      <button class="close-button" aria-label="Cerrar">×</button>
+      <p class="install-label">Instalar en Apple</p>
+      <h2>Guárdala como una aplicación</h2>
+      <ol class="install-steps">
+        <li><span>1</span><div>Pulsa <strong>Compartir</strong> en Safari.</div></li>
+        <li><span>2</span><div>Selecciona <strong>Añadir a pantalla de inicio</strong>.</div></li>
+        <li><span>3</span><div>Activa <strong>Abrir como app web</strong> y pulsa <strong>Añadir</strong>.</div></li>
+      </ol>
+      <p class="install-note">El icono aparecerá en tu pantalla de inicio y podrás abrirla como una aplicación.</p>
+      <button class="primary-button" value="close">Entendido</button>
+    </form>
+  </dialog>
+
+  <footer>
+    <p>Herramienta educativa basada en recomendaciones ERS 2025. Ante un cambio clínico, sigue tu plan asistencial.</p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>

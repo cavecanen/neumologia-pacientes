@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b3954">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="EPOC Contigo">
+  <meta name="description" content="Asistente educativo para personas con EPOC: dudas frecuentes, cuestionario CAT y orientación ante signos de alarma.">
+  <title>EPOC Contigo</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%230b3954'/%3E%3Cpath d='M29 14v20c-4-9-14-8-16 4-2 11 4 15 15 10 3-2 4-7 4-13V14m3 0v20c4-9 14-8 16 4 2 11-4 15-15 10-3-2-4-7-4-13' fill='none' stroke='%237ee0d5' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="module-home" href="../" aria-label="Volver a todos los módulos">← Módulos</a>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+  <header class="topbar">
+    <div class="brand" aria-label="EPOC Contigo">
+      <span class="brand-mark" aria-hidden="true">◖◗</span>
+      <span><strong>EPOC</strong> Contigo</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="install-button" id="installButton" type="button">Instalar</button>
+      <button class="help-button" id="emergencyButton" type="button">¿Es urgente?</button>
+    </div>
+  </header>
+
+  <div id="connectionStatus" class="connection-status" role="status" hidden>Sin conexión · Puedes seguir usando el contenido ya descargado</div>
+
+  <main id="main" class="app-shell">
+    <section class="welcome" aria-labelledby="pageTitle">
+      <p class="eyebrow">Orientación clara, paso a paso</p>
+      <h1 id="pageTitle">¿En qué puedo ayudarte hoy?</h1>
+      <p>Pregúntame sobre la EPOC, tus inhaladores, ejercicio o qué hacer si notas que estás peor.</p>
+    </section>
+
+    <nav class="section-tabs" aria-label="Secciones">
+      <button class="tab is-active" data-view="chat" aria-selected="true">Conversación</button>
+      <button class="tab" data-view="cat" aria-selected="false">Test CAT</button>
+      <button class="tab" data-view="plan" aria-selected="false">Mi plan</button>
+    </nav>
+
+    <section id="chatView" class="view is-active" aria-labelledby="chatTitle">
+      <div class="chat-card">
+        <div class="chat-heading">
+          <div class="assistant-avatar" aria-hidden="true">EC</div>
+          <div>
+            <h2 id="chatTitle">Orientador EPOC</h2>
+            <p><span class="status-dot"></span> Disponible · No sustituye una valoración clínica</p>
+          </div>
+        </div>
+
+        <div id="chatLog" class="chat-log" role="log" aria-live="polite" aria-relevant="additions">
+          <article class="message assistant">
+            <p>Hola. Puedo ayudarte con dudas habituales y detectar si lo que cuentas necesita atención urgente.</p>
+            <p><strong>Para empezar, ¿qué te preocupa?</strong></p>
+          </article>
+        </div>
+
+        <div class="quick-actions" aria-label="Preguntas frecuentes">
+          <button type="button" data-prompt="Me falta más el aire">Me falta más el aire</button>
+          <button type="button" data-prompt="Tengo más tos o flemas">Más tos o flemas</button>
+          <button type="button" data-prompt="Cómo uso mi inhalador">Usar mi inhalador</button>
+          <button type="button" data-prompt="Qué ejercicio puedo hacer">Ejercicio</button>
+        </div>
+
+        <form id="chatForm" class="chat-form">
+          <label class="sr-only" for="chatInput">Escribe tu pregunta</label>
+          <textarea id="chatInput" rows="1" maxlength="500" placeholder="Escribe aquí…" required></textarea>
+          <button type="submit" aria-label="Enviar pregunta">Enviar</button>
+        </form>
+        <p class="privacy-note">No escribas tu nombre ni otros datos personales. Esta versión no guarda ni envía lo que escribes.</p>
+      </div>
+    </section>
+
+    <section id="catView" class="view" aria-labelledby="catTitle" hidden>
+      <div class="panel cat-panel">
+        <div class="panel-heading">
+          <span class="step-badge">8 preguntas</span>
+          <h2 id="catTitle">¿Cómo te afecta la EPOC?</h2>
+          <p>El CAT mide el impacto de la enfermedad. Responde pensando en cómo te encuentras ahora.</p>
+        </div>
+        <form id="catForm">
+          <div id="catQuestions"></div>
+          <button class="primary-button" type="submit">Calcular mi resultado</button>
+        </form>
+        <div id="catResult" class="result-card" hidden aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="planView" class="view" aria-labelledby="planTitle" hidden>
+      <div class="plan-grid">
+        <article class="plan-card accent-blue">
+          <span class="card-number">01</span>
+          <h2 id="planTitle">Tratamiento diario</h2>
+          <p>Usa los inhaladores exactamente como te indicaron, aunque ese día respires bien.</p>
+          <button class="text-button" type="button" data-plan-prompt="Cómo uso mi inhalador">Repasar la técnica →</button>
+        </article>
+        <article class="plan-card accent-teal">
+          <span class="card-number">02</span>
+          <h2>Movimiento</h2>
+          <p>Camina o haz el ejercicio pautado de forma regular. Para si aparece dolor torácico, mareo o falta de aire intensa.</p>
+          <button class="text-button" type="button" data-plan-prompt="Qué ejercicio puedo hacer">Ver consejos →</button>
+        </article>
+        <article class="plan-card accent-orange">
+          <span class="card-number">03</span>
+          <h2>Si empeoro</h2>
+          <p>Más falta de aire, más tos o un cambio en las flemas pueden anunciar una exacerbación.</p>
+          <button class="text-button" type="button" id="planUrgency">Comprobar síntomas →</button>
+        </article>
+        <article class="plan-card accent-navy">
+          <span class="card-number">04</span>
+          <h2>Prevención</h2>
+          <p>Evita el tabaco y revisa con tu equipo sanitario las vacunas recomendadas y tu plan de acción.</p>
+        </article>
+      </div>
+      <div class="mmrc-card">
+        <div>
+          <p class="eyebrow">Escala mMRC</p>
+          <h2>¿Cuánto limita tu respiración?</h2>
+        </div>
+        <label for="mmrcSelect">Elige la frase que mejor te describe</label>
+        <select id="mmrcSelect">
+          <option value="">Selecciona una opción</option>
+          <option value="0">Solo me falta el aire con ejercicio intenso</option>
+          <option value="1">Me falta el aire al andar deprisa o subir una cuesta suave</option>
+          <option value="2">Ando más despacio que personas de mi edad o paro al caminar a mi paso</option>
+          <option value="3">Paro tras unos 100 metros o pocos minutos en llano</option>
+          <option value="4">No puedo salir de casa o me falta el aire al vestirme</option>
+        </select>
+        <p id="mmrcResult" class="mmrc-result" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="urgencyDialog" class="urgency-dialog">
+    <form method="dialog">
+      <button class="close-button" aria-label="Cerrar">×</button>
+      <p class="danger-label">Comprobación rápida</p>
+      <h2>¿Tienes alguno de estos síntomas?</h2>
+      <ul class="danger-list">
+        <li>Falta de aire intensa en reposo o que empeora rápidamente</li>
+        <li>Labios azulados, confusión, somnolencia o desmayo</li>
+        <li>Dolor fuerte en el pecho</li>
+        <li>Expulsas una cantidad importante de sangre al toser</li>
+      </ul>
+      <div class="emergency-callout">
+        <strong>Si la respuesta es sí, llama al 112 ahora.</strong>
+        <span>No conduzcas tú mismo si te encuentras muy mal.</span>
+      </div>
+      <button class="secondary-button" value="close">No tengo esos síntomas</button>
+    </form>
+  </dialog>
+
+  <dialog id="installDialog" class="urgency-dialog install-dialog">
+    <form method="dialog">
+      <button class="close-button" aria-label="Cerrar">×</button>
+      <p class="install-label">Instalar en Apple</p>
+      <h2>Guarda EPOC Contigo como una app</h2>
+      <ol class="install-steps">
+        <li><span>1</span><div>Pulsa <strong>Compartir</strong> <span class="share-symbol" aria-label="icono compartir">⇧</span> en Safari.</div></li>
+        <li><span>2</span><div>Selecciona <strong>Añadir a pantalla de inicio</strong>.</div></li>
+        <li><span>3</span><div>Activa <strong>Abrir como app web</strong> y pulsa <strong>Añadir</strong>.</div></li>
+      </ol>
+      <p class="install-note">El icono aparecerá en tu pantalla de inicio y podrás abrirla como una aplicación.</p>
+      <button class="primary-button" value="close">Entendido</button>
+    </form>
+  </dialog>
+
+  <footer>
+    <p>Herramienta educativa. Ante un empeoramiento, sigue el plan acordado con tu equipo sanitario.</p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>

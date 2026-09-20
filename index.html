@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#082f49">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Respira Contigo">
+  <meta name="description" content="Orientación educativa sobre EPOC, bronquiectasias, asma y apnea del sueño.">
+  <title>Respira Contigo</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#modules">Saltar a las enfermedades</a>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Respira Contigo, inicio">
+      <span class="brand-mark" aria-hidden="true">◖◗</span>
+      <span><strong>Respira</strong> Contigo</span>
+    </a>
+    <button id="installButton" class="install-button" type="button">Instalar</button>
+  </header>
+
+  <div id="connectionStatus" class="connection-status" role="status" hidden>
+    Sin conexión · Puedes seguir consultando el contenido descargado
+  </div>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">Información respiratoria de confianza</p>
+      <h1 id="page-title">¿Sobre qué enfermedad quieres consultar?</h1>
+      <p>Elige un módulo. Las respuestas están previamente redactadas y no se envía ni se guarda lo que escribas.</p>
+    </section>
+
+    <section id="modules" class="module-grid" aria-label="Módulos respiratorios">
+      <a class="module-card epoc" href="epoc/">
+        <span class="module-icon" aria-hidden="true">E</span>
+        <span class="module-copy">
+          <span class="module-kicker">Respiración y actividad</span>
+          <strong>EPOC</strong>
+          <span>Falta de aire, tos y flemas, inhaladores, ejercicio, oxígeno y test CAT.</span>
+        </span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="module-card bronch" href="bronquiectasias/">
+        <span class="module-icon" aria-hidden="true">B</span>
+        <span class="module-copy">
+          <span class="module-kicker">Flemas y limpieza bronquial</span>
+          <strong>Bronquiectasias</strong>
+          <span>Exacerbaciones, hemoptisis, fisioterapia, nebulizadores y antibióticos inhalados.</span>
+        </span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="module-card asthma" href="asma/">
+        <span class="module-icon" aria-hidden="true">A</span>
+        <span class="module-copy">
+          <span class="module-kicker">Control y crisis</span>
+          <strong>Asma</strong>
+          <span>Síntomas, medicación de rescate, técnica inhalatoria, control y zonas de flujo máximo.</span>
+        </span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="module-card sleep" href="apnea/">
+        <span class="module-icon" aria-hidden="true">☾</span>
+        <span class="module-copy">
+          <span class="module-kicker">Sueño y CPAP</span>
+          <strong>Apnea del sueño</strong>
+          <span>Mascarilla, fugas, sequedad, limpieza, adaptación, viajes y somnolencia.</span>
+        </span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </section>
+
+    <section class="safety" aria-labelledby="safety-title">
+      <span class="safety-number">112</span>
+      <div>
+        <h2 id="safety-title">Una aplicación educativa, no un servicio de urgencias</h2>
+        <p>Ante falta de aire grave, dolor torácico intenso, desmayo, confusión brusca o labios azulados, llama al 112.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Respira Contigo</strong> · No solicita datos personales ni sustituye la valoración de un profesional sanitario.</p>
+  </footer>
+
+  <dialog id="installDialog">
+    <form method="dialog">
+      <button class="close-button" aria-label="Cerrar">×</button>
+      <p class="dialog-label">Instalar en iPhone</p>
+      <h2>Guárdala como una aplicación</h2>
+      <ol>
+        <li><span>1</span><div>Abre esta página en <strong>Safari</strong>.</div></li>
+        <li><span>2</span><div>Pulsa <strong>Compartir</strong>, el cuadrado con una flecha hacia arriba.</div></li>
+        <li><span>3</span><div>Elige <strong>Añadir a pantalla de inicio</strong> y confirma.</div></li>
+      </ol>
+      <button class="dialog-button" value="close">Entendido</button>
+    </form>
+  </dialog>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

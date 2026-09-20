@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101b3d">
+  <meta name="description" content="Orientación práctica para convivir con la apnea obstructiva del sueño y la CPAP.">
+  <title>Apnea del Sueño Contigo</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="module-home" href="../" aria-label="Volver a todos los módulos">← Módulos</a>
+  <a class="skip" href="#main">Ir al contenido</a>
+  <header class="topbar">
+    <div class="brand" aria-label="Apnea del Sueño Contigo">
+      <span class="brand-icon" aria-hidden="true">☾</span>
+      <span><strong>Apnea del Sueño</strong><small>Contigo</small></span>
+    </div>
+    <button class="install-button" id="installButton" type="button">Instalar</button>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Tu descanso, paso a paso</span>
+        <h1>Dormir mejor también se entrena.</h1>
+        <p>Resuelve dudas sobre la CPAP, la mascarilla y la somnolencia con indicaciones breves y seguras.</p>
+      </div>
+      <div class="moon-art" aria-hidden="true"><span></span><i></i><b></b></div>
+    </section>
+
+    <aside class="safety" aria-label="Aviso de seguridad">
+      <div class="safety-icon">!</div>
+      <div><strong>Si tienes sueño al conducir</strong><p>No conduzcas ni manejes maquinaria. Detente en un lugar seguro y solicita valoración prioritaria.</p></div>
+      <button type="button" data-question="Me duermo conduciendo">Qué hacer</button>
+    </aside>
+
+    <nav class="tabs" aria-label="Secciones">
+      <button class="tab active" type="button" data-tab="chat" aria-selected="true">Conversación</button>
+      <button class="tab" type="button" data-tab="review" aria-selected="false">Revisar CPAP</button>
+      <button class="tab" type="button" data-tab="routine" aria-selected="false">Mi rutina</button>
+    </nav>
+
+    <section class="panel active" id="panel-chat" aria-labelledby="chat-title">
+      <div class="chat-card">
+        <div class="chat-heading">
+          <div class="avatar" aria-hidden="true">☾</div>
+          <div><h2 id="chat-title">¿Qué necesitas esta noche?</h2><p>Cuéntamelo con tus palabras.</p></div>
+        </div>
+        <div class="quick-prompts" aria-label="Preguntas frecuentes">
+          <button type="button" data-question="Tengo fugas en la mascarilla">Tengo fugas</button>
+          <button type="button" data-question="La CPAP me seca la boca">Me seca la boca</button>
+          <button type="button" data-question="No tolero la CPAP">No tolero la CPAP</button>
+          <button class="urgent-chip" type="button" data-question="Me duermo conduciendo">Sueño al conducir</button>
+        </div>
+        <div class="messages" id="messages" role="log" aria-live="polite">
+          <article class="message assistant">
+            <span class="message-label">Asistente</span>
+            <p>Hola. Puedo ayudarte con la mascarilla, fugas, sequedad, congestión, limpieza, viajes o adaptación a la CPAP. No guardo lo que escribes.</p>
+          </article>
+        </div>
+        <form class="composer" id="chatForm">
+          <label class="sr-only" for="chatInput">Escribe tu pregunta</label>
+          <textarea id="chatInput" rows="1" maxlength="500" placeholder="Por ejemplo: la mascarilla me deja marcas…"></textarea>
+          <button type="submit" aria-label="Enviar pregunta">➜</button>
+        </form>
+        <p class="privacy-note">Orientación educativa, no sustituye la valoración de tu unidad de sueño. No incluyas datos personales.</p>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-review" aria-labelledby="review-title" hidden>
+      <div class="section-title"><span class="eyebrow">Chequeo de 1 minuto</span><h2 id="review-title">¿Cómo va tu CPAP?</h2><p>Marca lo que te ocurre y recibirás un plan práctico.</p></div>
+      <form id="cpapReview" class="review-card">
+        <fieldset>
+          <legend>En los últimos 7 días…</legend>
+          <label><input type="checkbox" name="issue" value="use"><span><strong>No la he usado durante todo mi tiempo de sueño</strong><small>También cuenta la siesta.</small></span></label>
+          <label><input type="checkbox" name="issue" value="leak"><span><strong>Tengo fugas, ruido o marcas</strong><small>La mascarilla se mueve o molesta.</small></span></label>
+          <label><input type="checkbox" name="issue" value="dry"><span><strong>Tengo sequedad o congestión</strong><small>Boca, garganta o nariz.</small></span></label>
+          <label><input type="checkbox" name="issue" value="pressure"><span><strong>Siento presión, aire en el estómago o agobio</strong><small>Me cuesta conciliar el sueño con el equipo.</small></span></label>
+          <label class="danger-check"><input type="checkbox" name="issue" value="sleepy"><span><strong>Sigo con sueño intenso durante el día</strong><small>Especialmente al volante o trabajando.</small></span></label>
+        </fieldset>
+        <button class="primary" type="submit">Crear mi plan</button>
+      </form>
+      <div id="reviewResult" class="review-result" hidden aria-live="polite"></div>
+    </section>
+
+    <section class="panel" id="panel-routine" aria-labelledby="routine-title" hidden>
+      <div class="section-title"><span class="eyebrow">Pequeños hábitos</span><h2 id="routine-title">Una rutina que ayuda</h2><p>Adáptala siempre a las instrucciones de tu equipo y fabricante.</p></div>
+      <div class="routine-grid">
+        <article><span>01</span><h3>Cada noche</h3><ul><li>Usa el tratamiento durante todo el tiempo que duermas.</li><li>Coloca la mascarilla tumbado y con el equipo encendido.</li><li>Evita apretar de más las correas.</li></ul></article>
+        <article><span>02</span><h3>Al despertar</h3><ul><li>Lava la almohadilla según el fabricante y déjala secar al aire.</li><li>Vacía el humidificador si así lo indica el manual.</li><li>Anota molestias que se repitan.</li></ul></article>
+        <article><span>03</span><h3>Con regularidad</h3><ul><li>Lava tubo, mascarilla y depósito con agua y jabón suave.</li><li>Revisa y cambia filtros según el fabricante.</li><li>No sumerjas nunca la unidad eléctrica.</li></ul></article>
+        <article class="accent-card"><span>04</span><h3>Evita atajos</h3><ul><li>No cambies la presión ni suspendas el tratamiento por tu cuenta.</li><li>No uses limpiadores de ozono o luz UV no autorizados.</li><li>Limpiar no es lo mismo que sustituir piezas deterioradas.</li></ul></article>
+      </div>
+      <div class="travel-card"><div aria-hidden="true">✈</div><div><h3>¿Viajas?</h3><p>Lleva la CPAP como equipaje de mano, comprueba adaptador y batería, y consulta las normas de la compañía si vas a usarla durante el vuelo.</p></div><button type="button" data-question="Voy a viajar con la CPAP">Preparar viaje</button></div>
+    </section>
+
+    <section class="limits">
+      <h2>Cuándo pedir ayuda</h2>
+      <div class="limits-grid">
+        <article><strong>Hoy / prioritaria</strong><p>Somnolencia que compromete la conducción o el trabajo, retirada involuntaria frecuente de la mascarilla o imposibilidad de usar el tratamiento.</p></article>
+        <article><strong>Programa revisión</strong><p>Fugas persistentes, dolor, heridas, sequedad intensa, aerofagia o sueño diurno pese a usar correctamente la CPAP.</p></article>
+        <article class="emergency"><strong>Emergencia · 112</strong><p>Dolor torácico intenso, falta de aire grave, desmayo, confusión brusca o labios azulados.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Apnea del Sueño Contigo</strong> · Herramienta educativa sin registro de datos.</p>
+    <p class="sources">Información basada en recomendaciones de práctica clínica y seguridad de <a href="https://www.nice.org.uk/guidance/ng202" target="_blank" rel="noreferrer">NICE</a>, <a href="https://sleepeducation.org/patients/cpap/" target="_blank" rel="noreferrer">AASM</a> y <a href="https://www.fda.gov/consumers/consumer-updates/do-you-need-device-claims-clean-cpap-machine" target="_blank" rel="noreferrer">FDA</a>.</p>
+  </footer>
+
+  <dialog id="installDialog">
+    <button class="dialog-close" type="button" aria-label="Cerrar">×</button>
+    <div class="dialog-icon">☾</div><h2>Instalar en tu móvil</h2>
+    <div id="installSteps"></div>
+  </dialog>
+  <script src="app.js" defer></script>
+</body>
+</html>

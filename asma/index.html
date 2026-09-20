@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#173f70">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Asma Contigo">
+  <meta name="description" content="Orientación para personas con asma: control de síntomas, inhaladores, crisis y plan de acción.">
+  <title>Asma Contigo</title>
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="module-home" href="../" aria-label="Volver a todos los módulos">← Módulos</a>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+  <header class="topbar">
+    <div class="brand" aria-label="Asma Contigo"><span class="brand-mark" aria-hidden="true">≈</span><span><strong>Asma</strong> Contigo</span></div>
+    <div class="topbar-actions"><button class="install-button" id="installButton" type="button">Instalar</button><button class="urgent-button" id="urgentButton" type="button">¿Es una crisis?</button></div>
+  </header>
+  <div id="connectionStatus" class="connection-status" role="status" hidden>Sin conexión · El contenido descargado sigue disponible</div>
+
+  <main id="main" class="app-shell">
+    <section class="welcome" aria-labelledby="pageTitle"><p class="eyebrow">Respira. Comprueba. Actúa.</p><h1 id="pageTitle">¿Cómo está tu asma hoy?</h1><p>Pregunta sobre síntomas, medicación de mantenimiento y rescate, técnica inhalatoria, ejercicio o desencadenantes.</p></section>
+    <nav class="section-tabs" aria-label="Secciones"><button class="tab is-active" data-view="chat" aria-selected="true">Conversación</button><button class="tab" data-view="control" aria-selected="false">Mi control</button><button class="tab" data-view="plan" aria-selected="false">Mi plan</button></nav>
+
+    <section id="chatView" class="view is-active" aria-labelledby="chatTitle">
+      <div class="chat-card">
+        <div class="chat-heading"><div class="assistant-avatar" aria-hidden="true">AC</div><div><h2 id="chatTitle">Orientador de asma</h2><p><span class="status-dot"></span> Información educativa · Sigue tu plan personalizado</p></div></div>
+        <div id="chatLog" class="chat-log" role="log" aria-live="polite" aria-relevant="additions"><article class="message assistant"><p>Hola. Puedo ayudarte a valorar el control del asma y a reconocer una crisis.</p><p><strong>¿Qué te preocupa ahora?</strong></p></article></div>
+        <div class="quick-actions" aria-label="Preguntas frecuentes"><button type="button" data-prompt="Necesito más mi inhalador de rescate">Uso más el rescate</button><button type="button" data-prompt="Cómo uso mi inhalador">Técnica inhalatoria</button><button type="button" data-prompt="Tengo una crisis de asma">Tengo una crisis</button><button type="button" data-prompt="Puedo hacer ejercicio con asma">Ejercicio</button></div>
+        <form id="chatForm" class="chat-form"><label class="sr-only" for="chatInput">Escribe tu pregunta</label><textarea id="chatInput" rows="1" maxlength="500" placeholder="Escribe aquí…" required></textarea><button type="submit">Enviar</button></form>
+        <p class="privacy-note">No escribas datos personales. Esta versión no guarda ni envía lo que escribes.</p>
+      </div>
+    </section>
+
+    <section id="controlView" class="view" aria-labelledby="controlTitle" hidden>
+      <div class="panel control-panel">
+        <div class="panel-heading"><span class="step-badge">Últimas 4 semanas</span><h2 id="controlTitle">Cuatro preguntas sobre tu control</h2><p>Marca “sí” cuando la situación haya ocurrido durante las últimas cuatro semanas.</p></div>
+        <form id="controlForm">
+          <fieldset><legend>Control de síntomas</legend>
+            <label class="check-row"><input type="checkbox" name="control" value="day"><span><strong>Síntomas durante el día más de dos veces por semana</strong><small>Tos, pitos, opresión o falta de aire</small></span></label>
+            <label class="check-row"><input type="checkbox" name="control" value="night"><span><strong>Me he despertado por el asma</strong><small>Tos, pitos o dificultad para respirar por la noche</small></span></label>
+            <label class="check-row"><input type="checkbox" name="control" value="reliever"><span><strong>Si mi rescate es salbutamol o terbutalina: lo he necesitado más de dos veces por semana</strong><small>Sin contar el uso preventivo antes del ejercicio. Si utilizas corticoide-formoterol de rescate, sigue los límites de tu plan.</small></span></label>
+            <label class="check-row"><input type="checkbox" name="control" value="activity"><span><strong>El asma ha limitado mis actividades</strong><small>Ejercicio, trabajo, estudio o vida diaria</small></span></label>
+          </fieldset>
+          <button class="primary-button" type="submit">Valorar mi control</button>
+        </form>
+        <div id="controlResult" class="result-card" hidden aria-live="polite"></div>
+      </div>
+      <div class="panel peak-panel">
+        <div class="panel-heading"><span class="step-badge">Solo si utilizas medidor</span><h2>Zona orientativa de flujo máximo</h2><p>Introduce tu mejor valor personal estable y el valor de hoy.</p></div>
+        <form id="peakForm" class="peak-form"><label>Mi mejor valor personal<input id="peakBest" type="number" min="50" max="900" inputmode="numeric" required><span>L/min</span></label><label>Valor de hoy<input id="peakToday" type="number" min="20" max="900" inputmode="numeric" required><span>L/min</span></label><button class="primary-button" type="submit">Calcular zona</button></form>
+        <div id="peakResult" class="result-card" hidden aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="planView" class="view" aria-labelledby="planTitle" hidden>
+      <div class="plan-intro"><p class="eyebrow">Tu plan escrito manda</p><h2 id="planTitle">Cuatro pilares para mantener el control</h2><p>El tratamiento exacto y las dosis deben coincidir con tu plan personal.</p></div>
+      <div class="plan-grid">
+        <article class="plan-card blue"><span>01</span><h3>Mantenimiento</h3><p>Utiliza el tratamiento antiinflamatorio como está pautado, incluso cuando te encuentres bien.</p><button data-plan-prompt="Para qué sirve el inhalador de mantenimiento">Entender su función →</button></article>
+        <article class="plan-card cyan"><span>02</span><h3>Rescate</h3><p>Lleva el inhalador indicado y conoce cuándo y cómo utilizarlo según tu estrategia terapéutica.</p><button data-plan-prompt="Necesito más mi inhalador de rescate">Valorar el uso →</button></article>
+        <article class="plan-card amber"><span>03</span><h3>Técnica correcta</h3><p>Una técnica deficiente puede simular falta de respuesta. Revísala periódicamente con el dispositivo real.</p><button data-plan-prompt="Cómo uso mi inhalador">Repasar lo esencial →</button></article>
+        <article class="plan-card navy"><span>04</span><h3>Empeoramiento</h3><p>Reconoce tus primeras señales y sigue el plan de acción antes de que la crisis progrese.</p><button id="planCrisis" type="button">Comprobar una crisis →</button></article>
+      </div>
+      <div class="trigger-card"><div><p class="eyebrow">Desencadenantes</p><h2>Identifica los tuyos, no vivas evitando todo</h2></div><p>Tabaco y vapeo, infecciones, alérgenos relevantes, contaminación, esfuerzo, aire frío y algunos fármacos pueden influir. El objetivo es controlar el asma, no prohibirte la vida.</p></div>
+    </section>
+  </main>
+
+  <dialog id="urgentDialog" class="modal"><form method="dialog"><button class="close-button" aria-label="Cerrar">×</button><p class="danger-label">Crisis grave</p><h2>Llama al 112 si:</h2><ul><li>Te cuesta hablar en frases completas por falta de aire</li><li>Estás confuso, somnoliento, exhausto o notas labios azulados</li><li>La respiración empeora rápidamente o apenas puedes moverte</li><li>El inhalador de rescate indicado no produce mejoría suficiente</li></ul><div class="emergency-callout"><strong>Sigue tu plan de crisis y llama al 112.</strong><span>Siéntate erguido. No te tumbes ni conduzcas tú mismo.</span></div><button class="secondary-button" value="close">No tengo esos síntomas</button></form></dialog>
+
+  <dialog id="installDialog" class="modal install-dialog"><form method="dialog"><button class="close-button" aria-label="Cerrar">×</button><p class="install-label">Instalar en Apple</p><h2>Guárdala como una aplicación</h2><ol class="install-steps"><li><span>1</span><div>Pulsa <strong>Compartir</strong> en Safari.</div></li><li><span>2</span><div>Selecciona <strong>Añadir a pantalla de inicio</strong>.</div></li><li><span>3</span><div>Activa <strong>Abrir como app web</strong> y pulsa <strong>Añadir</strong>.</div></li></ol><p class="install-note">El icono aparecerá en tu pantalla de inicio y podrás abrirla como una aplicación.</p><button class="primary-button" value="close">Entendido</button></form></dialog>
+
+  <footer><p>Herramienta educativa basada en GINA 2026. No sustituye tu plan de acción individual.</p></footer>
+  <script src="app.js"></script>
+</body>
+</html>

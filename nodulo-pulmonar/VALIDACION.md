@@ -15,4 +15,4 @@ Referencias de comparación: https://oncotoolkit.com/calculator/brock-lung-nodul
 
 Herder se desactiva para GGO, part-solid, múltiples nódulos y cáncer reciente. Los umbrales clínicos proceden de BTS y la vigilancia sub-sólida de Fleischner. La concordancia matemática no equivale a validación clínica prospectiva del producto.
 
-Publicación: pendiente; el conector GitHub rechazó la creación de `nodulo-pulmonar/index.html` con HTTP 403, `Resource not accessible by integration`. No se alteró el repositorio.
+Publicación: 25/09/2026, módulo independiente en GitHub Pages, tras comparación matemática. La verificación en navegador de cálculo, informe y QR se efectuó con un caso sintético. La comprobación sin red de la instalación queda pendiente de prueba manual en dispositivo.
